@@ -8,12 +8,12 @@ setup(
     name='vogo',
     version='1.0.0',
     packages=find_packages(),
-    description='Librería de comandos de voz y gestos para interfaces naturales',
+    description='Librería Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Juan Carlos Ticona Fiesta',
     author_email='qarlos123@outlook.com',
-    url='',
+    url='https://github.com/Carlos3451/vogo4py',
     classifiers=[
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -35,7 +35,7 @@ setup(
     ],
     python_requires='>=3.7',
     project_urls={
-        'Documentation': 'https://github.com/tu-usuario/vogo/docs',
-        'Source': 'https://github.com/tu-usuario/vogo',
+        'Documentation': 'https://github.com/Carlos3451/vogo4py/docs',
+        'Source': 'https://github.com/Carlos3451/vogo4py',
     },
 )
