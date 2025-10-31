@@ -1,0 +1,2 @@
+[console_scripts]
+vogo-check = vogo.cli:check_dependencies

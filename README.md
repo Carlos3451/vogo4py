@@ -1,0 +1,406 @@
+# ==================== README.md ====================
+"""
+# 🎙️ vogo
+
+**Librería Python para interfaces multimodales accesibles**
+
+Procesa y analiza texto, voz, gestos e imágenes con reconocimiento de patrones gramaticales. 
+Ideal para crear aplicaciones accesibles e inclusivas.
+
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Status](https://img.shields.io/badge/status-alpha-orange.svg)]()
+
+---
+
+## ✨ Características
+
+- 🎤 **Reconocimiento de voz** - Transcribe audio a texto con Google Speech Recognition
+- 👁️ **OCR de imágenes** - Extrae texto de imágenes usando Tesseract
+- ✋ **Procesamiento de gestos** - Analiza secuencias de gestos como listas
+- 📝 **Análisis de texto** - Tokenización y matching con NLTK
+- 🔍 **Gramáticas personalizables** - Soporta regex y gramáticas libres de contexto (CFG)
+- 🌐 **Multimodal** - Procesa diferentes tipos de entrada con una API única
+
+---
+
+## 📦 Instalación
+
+### Requisitos Previos
+
+#### 1. Python 3.8 o superior
+
+```bash
+python --version  # Debe ser >= 3.8
+```
+
+#### 2. Tesseract OCR (para procesamiento de imágenes)
+
+**Windows:**
+1. Descargar el instalador desde [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
+2. Instalar y agregar al PATH
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get update
+sudo apt-get install tesseract-ocr
+```
+
+**macOS:**
+```bash
+brew install tesseract
+```
+
+**Verificar instalación:**
+```bash
+tesseract --version
+```
+
+### Instalación de vogo
+
+#### Opción 1: Modo desarrollo (recomendado para contribuir)
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/Carlos3451/vogo.git
+cd vogo
+
+# Crear entorno virtual
+python -m venv env
+source env/bin/activate  # Linux/Mac
+env\\Scripts\\activate    # Windows
+
+# Instalar en modo editable
+pip install -e .
+```
+
+#### Opción 2: Desde PyPI (cuando esté publicado)
+
+```bash
+pip install vogo
+```
+
+#### Opción 3: Instalación con extras
+
+```bash
+# Con herramientas de desarrollo
+pip install -e ".[dev]"
+
+# Con documentación
+pip install -e ".[docs]"
+
+# Con todo
+pip install -e ".[all]"
+```
+
+### Verificar Instalación
+
+```bash
+# Descarga el script de verificación
+python -c "from vogo import Grammar, Processor; print('✅ vogo instalado correctamente')"
+```
+
+---
+
+## 🚀 Uso Rápido
+
+### Ejemplo Básico - Procesamiento de Texto
+
+```python
+from vogo import Grammar, Processor
+
+# Define reglas gramaticales con regex
+grammar = Grammar({
+    'email': r'\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b',
+    'phone': r'\\b\\d{3}[-.]?\\d{3}[-.]?\\d{4}\\b',
+    'saludo': r'\\b(hola|hello|hi)\\b'
+})
+
+# Crea el procesador
+processor = Processor(grammar)
+
+# Procesa texto
+texto = "Hola, mi email es contacto@ejemplo.com y mi teléfono es 555-123-4567"
+resultado = processor.process_input(texto, type='text')
+
+# Resultados
+print(f"Texto: {resultado['text']}")
+print(f"Tokens: {resultado['tokens']}")
+print(f"Coincidencias: {resultado['matches']}")
+# Output:
+# Coincidencias: [
+#   {'type': 'saludo', 'matches': ['Hola']},
+#   {'type': 'email', 'matches': ['contacto@ejemplo.com']},
+#   {'type': 'phone', 'matches': ['555-123-4567']}
+# ]
+```
+
+### Procesamiento de Voz
+
+```python
+from vogo import Grammar, Processor
+
+grammar = Grammar({'comando': r'\\b(abrir|cerrar|iniciar)\\b'})
+processor = Processor(grammar)
+
+# Lee archivo de audio
+with open('audio.wav', 'rb') as f:
+    audio_bytes = f.read()
+
+# Procesa audio
+resultado = processor.process_input(audio_bytes, type='voice')
+print(f"Transcripción: {resultado['text']}")
+print(f"Comandos detectados: {resultado['matches']}")
+```
+
+### Procesamiento de Imágenes (OCR)
+
+```python
+from vogo import Grammar, Processor
+
+grammar = Grammar({'fecha': r'\\d{2}/\\d{2}/\\d{4}'})
+processor = Processor(grammar)
+
+# Lee imagen
+with open('documento.jpg', 'rb') as f:
+    imagen_bytes = f.read()
+
+# Extrae y analiza texto
+resultado = processor.process_input(imagen_bytes, type='image')
+print(f"Texto extraído: {resultado['text']}")
+print(f"Fechas encontradas: {resultado['matches']}")
+```
+
+### Procesamiento de Gestos
+
+```python
+from vogo import Grammar, Processor
+
+grammar = Grammar({'direccion': r'\\b(arriba|abajo|izquierda|derecha)\\b'})
+processor = Processor(grammar)
+
+# Lista de gestos capturados
+gestos = ['arriba', 'arriba', 'derecha', 'abajo']
+
+resultado = processor.process_input(gestos, type='gestures')
+print(f"Secuencia: {resultado['tokens']}")
+print(f"Direcciones: {resultado['matches']}")
+```
+
+---
+
+## 📚 Documentación Completa
+
+### Clase `Grammar`
+
+Define las reglas gramaticales para el análisis.
+
+```python
+from vogo import Grammar
+
+# Gramática con regex
+grammar_regex = Grammar(
+    rules={
+        'numero': r'\\d+',
+        'palabra': r'\\w+'
+    },
+    type='regex'  # Por defecto
+)
+
+# Gramática libre de contexto (CFG)
+grammar_cfg = Grammar(
+    rules={
+        'expr': 'NUMBER "+" NUMBER',
+        'NUMBER': '/\\d+/'
+    },
+    type='cfg'
+)
+```
+
+**Parámetros:**
+- `rules` (Dict[str, str]): Diccionario con nombre_regla → patrón
+- `type` (str): 'regex' o 'cfg'
+
+### Clase `Processor`
+
+Procesador principal para todas las modalidades.
+
+```python
+from vogo import Processor
+
+processor = Processor(grammar)
+
+# Procesa diferentes tipos de entrada
+resultado = processor.process_input(
+    input=data,           # str, List[str], o bytes
+    type='text'           # 'text', 'voice', 'gestures', 'image', 'video'
+)
+```
+
+**Tipos soportados:**
+- `text`: Texto plano (str)
+- `voice`: Audio en bytes (requiere formato compatible con SpeechRecognition)
+- `gestures`: Lista de strings
+- `image`: Imagen en bytes (JPG, PNG, etc.)
+- `video`: Video en bytes (extrae frames y aplica OCR)
+
+**Resultado:**
+```python
+{
+    'text': str,              # Texto procesado
+    'tokens': List[str],      # Lista de tokens/palabras
+    'matches': List[Dict],    # Coincidencias gramaticales
+    'stats': {
+        'token_count': int,   # Total de tokens
+        'match_count': int,   # Total de coincidencias
+        'unique_tokens': int  # Tokens únicos
+    }
+}
+```
+
+---
+
+## 🎯 Casos de Uso
+
+### 1. Asistente de Voz Accesible
+
+```python
+# Comandos para personas con movilidad reducida
+grammar = Grammar({
+    'accion': r'\\b(encender|apagar|abrir|cerrar)\\b',
+    'dispositivo': r'\\b(luz|puerta|ventana|televisor)\\b'
+})
+
+processor = Processor(grammar)
+
+# Usuario dice: "encender luz"
+audio = grabar_audio()
+resultado = processor.process_input(audio, type='voice')
+
+if resultado['matches']:
+    ejecutar_comando(resultado['matches'])
+```
+
+### 2. Lector de Documentos para Ciegos
+
+```python
+# Extrae información de documentos impresos
+grammar = Grammar({
+    'monto': r'\\$\\d+\\.\\d{2}',
+    'fecha': r'\\d{2}/\\d{2}/\\d{4}'
+})
+
+processor = Processor(grammar)
+
+# Foto de una factura
+with open('factura.jpg', 'rb') as f:
+    resultado = processor.process_input(f.read(), type='image')
+
+# Convierte a voz con text-to-speech
+hablar(f"Total: {resultado['matches'][0]['matches'][0]}")
+```
+
+### 3. Control por Gestos
+
+```python
+# Navegación para personas con discapacidad auditiva
+grammar = Grammar({'navegacion': r'\\b(menu|atras|siguiente|inicio)\\b'})
+processor = Processor(grammar)
+
+gestos_detectados = capturar_gestos_camara()
+resultado = processor.process_input(gestos_detectados, type='gestures')
+
+navegar(resultado['matches'])
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Instalar dependencias de desarrollo
+pip install -e ".[dev]"
+
+# Ejecutar tests
+pytest tests/
+
+# Con cobertura
+pytest --cov=vogo tests/
+
+# Tests específicos
+pytest tests/test_grammar.py
+```
+
+---
+
+## 🛠️ Desarrollo
+
+### Estructura del Proyecto
+
+```
+vogo/
+├── src/
+│   └── vogo/
+│       ├── __init__.py
+│       ├── grammar.py
+│       ├── processor.py
+│       ├── base_processor.py
+│       ├── text_processor.py
+│       ├── voice_processor.py
+│       ├── image_processor.py
+│       └── utils.py
+├── tests/
+│   ├── test_vogo_completo.py
+├── docs/
+├── probar_vogo_rapido.py
+├── setup.py
+├── README.md
+└── LICENSE
+```
+
+## 📋 Dependencias
+
+### Obligatorias
+- `nltk>=3.8.1` - Tokenización y procesamiento de lenguaje natural
+- `lark>=1.1.7` - Parsing de gramáticas CFG
+- `Pillow>=10.0.0` - Procesamiento de imágenes
+- `pytesseract>=0.3.10` - OCR (extracción de texto de imágenes)
+- `SpeechRecognition>=3.10.0` - Reconocimiento de voz
+
+### Sistema
+- `Tesseract OCR` - Motor de OCR (instalación externa requerida)
+
+---
+
+## 🤝 Accesibilidad
+
+vogo está diseñado pensando en la inclusión:
+
+- ♿ **Interfaces multimodales** - Múltiples formas de interacción
+- 🎤 **Comandos por voz** - Para personas con movilidad reducida
+- 👁️ **OCR** - Lee texto impreso para personas con discapacidad visual
+- ✋ **Gestos** - Alternativa para personas con discapacidad auditiva
+- 📖 **Documentación clara** - Ejemplos paso a paso
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+## 👤 Autor
+
+**Carlos3451**
+- Email: qarlos123@outlook.com
+- GitHub: [@Carlos3451](https://github.com/Carlos3451)
+
+---
+
+## ⭐ ¿Te gusta vogo?
+
+Si este proyecto te resulta útil, considera darle una estrella ⭐ en GitHub.
+
+¡Gracias por usar vogo! 🎉
+"""

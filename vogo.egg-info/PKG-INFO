@@ -1,0 +1,45 @@
+Metadata-Version: 2.4
+Name: vogo
+Version: 1.0.0
+Summary: Librería Python
+Home-page: https://github.com/Carlos3451/vogo4py
+Author: Juan Carlos Ticona Fiesta
+Author-email: qarlos123@outlook.com
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: speech_recognition
+Requires-Dist: pytesseract
+Requires-Dist: Pillow
+Requires-Dist: nltk
+Requires-Dist: lark
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# My Library
+
+A Python library for processing grammars and recognizing patterns in text, voice, gestures, and images.
+
+## Installation
+
+pip install -e .
+
+## Usage
+
+from my_library import Grammar, Processor
+
+# Example
+rules = {'greeting': r'hello|hi'}
+grammar = Grammar(rules)
+processor = Processor(grammar)
+result = processor.process_input("hello world", type='text')
+print(result)

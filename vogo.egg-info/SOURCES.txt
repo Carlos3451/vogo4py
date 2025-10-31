@@ -1,0 +1,7 @@
+README.md
+setup.py
+vogo.egg-info/PKG-INFO
+vogo.egg-info/SOURCES.txt
+vogo.egg-info/dependency_links.txt
+vogo.egg-info/requires.txt
+vogo.egg-info/top_level.txt

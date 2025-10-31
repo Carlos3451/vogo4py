@@ -1,8 +1,11 @@
 from typing import Union, List, Dict, Any
 from .base_processor import BaseProcessor
+
 class TextProcessor(BaseProcessor):
+    
     def process(self, input: Union[str, List[str]]) -> Dict[str, Any]:
-        if isinstance(input, list):  # Gestures
+
+        if isinstance(input, list):
             processed_text = ' '.join(input)
         else:
             processed_text = input.strip()
