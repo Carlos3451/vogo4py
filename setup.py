@@ -61,7 +61,6 @@ setup(
         "Intended Audience :: Healthcare Industry",
         "Intended Audience :: Education",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Accessibility",
         "Topic :: Scientific/Engineering :: Human Machine Interfaces",
         "Topic :: Multimedia :: Sound/Audio :: Speech",
         "Topic :: Text Processing :: Linguistic",

@@ -6,7 +6,6 @@ Home-page: https://github.com/Carlos3451/vogo
 Author: Carlos3451
 Author-email: qarlos123@outlook.com
 License: MIT
-Project-URL: Bug Reports, https://github.com/Carlos3451/vogo/issues
 Project-URL: Source, https://github.com/Carlos3451/vogo
 Project-URL: Documentation, https://github.com/Carlos3451/vogo#readme
 Keywords: accessibility,voice recognition,gesture recognition,multimodal,nlp,ocr,speech recognition,text processing,grammar parsing,assistive technology,accesibilidad,reconocimiento de voz,comandos por voz
@@ -16,7 +15,6 @@ Classifier: Intended Audience :: Developers
 Classifier: Intended Audience :: Healthcare Industry
 Classifier: Intended Audience :: Education
 Classifier: Topic :: Software Development :: Libraries :: Python Modules
-Classifier: Topic :: Accessibility
 Classifier: Topic :: Scientific/Engineering :: Human Machine Interfaces
 Classifier: Topic :: Multimedia :: Sound/Audio :: Speech
 Classifier: Topic :: Text Processing :: Linguistic
@@ -37,19 +35,6 @@ Requires-Dist: lark>=1.1.7
 Requires-Dist: Pillow>=10.0.0
 Requires-Dist: pytesseract>=0.3.10
 Requires-Dist: SpeechRecognition>=3.10.0
-Provides-Extra: dev
-Requires-Dist: pytest>=7.4.0; extra == "dev"
-Requires-Dist: pytest-cov>=4.1.0; extra == "dev"
-Requires-Dist: black>=23.0.0; extra == "dev"
-Requires-Dist: flake8>=6.0.0; extra == "dev"
-Requires-Dist: isort>=5.12.0; extra == "dev"
-Provides-Extra: docs
-Requires-Dist: sphinx>=7.0.0; extra == "docs"
-Requires-Dist: sphinx-rtd-theme>=1.3.0; extra == "docs"
-Provides-Extra: all
-Requires-Dist: pytest>=7.4.0; extra == "all"
-Requires-Dist: black>=23.0.0; extra == "all"
-Requires-Dist: sphinx>=7.0.0; extra == "all"
 Dynamic: author
 Dynamic: author-email
 Dynamic: classifier
@@ -60,7 +45,6 @@ Dynamic: keywords
 Dynamic: license
 Dynamic: platform
 Dynamic: project-url
-Dynamic: provides-extra
 Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
@@ -417,26 +401,13 @@ vogo/
 │       ├── image_processor.py
 │       └── utils.py
 ├── tests/
-│   ├── test_grammar.py
-│   ├── test_processor.py
-│   └── test_integration.py
+│   ├── test_vogo_completo.py
 ├── docs/
-├── examples/
+├── probar_vogo_rapido.py
 ├── setup.py
-├── requirements.txt
 ├── README.md
 └── LICENSE
 ```
-
-### Contribuir
-
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
----
 
 ## 📋 Dependencias
 
@@ -475,36 +446,6 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 **Carlos3451**
 - Email: qarlos123@outlook.com
 - GitHub: [@Carlos3451](https://github.com/Carlos3451)
-
----
-
-## 🙏 Agradecimientos
-
-- Comunidad de NLTK por el procesamiento de lenguaje natural
-- Tesseract OCR por el reconocimiento óptico de caracteres
-- Todos los contribuidores y usuarios de vogo
-
----
-
-## 📞 Soporte
-
-¿Tienes problemas o sugerencias?
-
-- 🐛 [Reportar un bug](https://github.com/Carlos3451/vogo/issues)
-- 💡 [Sugerir una característica](https://github.com/Carlos3451/vogo/issues)
-- 📧 Contacto: qarlos123@outlook.com
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Soporte para más idiomas en reconocimiento de voz
-- [ ] Procesamiento de video en tiempo real
-- [ ] Integración con modelos de IA (GPT, BERT)
-- [ ] Interfaz gráfica para crear gramáticas
-- [ ] Publicación en PyPI
-- [ ] Documentación con Sphinx
-- [ ] Más ejemplos y tutoriales
 
 ---
 
